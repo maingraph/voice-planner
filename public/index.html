@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Голосовой ежедневник</title>
+  <meta name="description" content="Голосовой ассистент для задач, напоминаний и встреч" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🎙️</span>
+      <div>
+        <h1>Голосовой ежедневник</h1>
+        <p class="subtitle">Задачи, напоминания и встречи — голосом или текстом</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span id="engine" class="badge" title="Чем обрабатываются запросы">…</span>
+      <button id="tts-toggle" class="icon-btn" type="button" aria-pressed="true" title="Озвучивать ответы">🔊</button>
+      <button id="notify-btn" class="icon-btn" type="button" title="Включить уведомления о напоминаниях">🔔</button>
+      <a id="ics-link" class="icon-btn" href="#" title="Подписаться в календаре (iCal)" target="_blank" rel="noopener">📅</a>
+      <button id="reset-btn" class="icon-btn" type="button" title="Начать диалог заново">↺</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="chat" aria-label="Диалог с ассистентом">
+      <div id="messages" class="messages" aria-live="polite"></div>
+
+      <div id="examples" class="examples" aria-label="Примеры запросов">
+        <button type="button" class="chip">Напомни мне завтра в 10 утра позвонить Ивану</button>
+        <button type="button" class="chip">Добавь встречу с командой завтра в 15:00</button>
+        <button type="button" class="chip">В пятницу нужно отправить отчёт</button>
+        <button type="button" class="chip">Поставь встречу с Иваном завтра</button>
+        <button type="button" class="chip">Что у меня сегодня?</button>
+        <button type="button" class="chip">Что запланировано на эту неделю?</button>
+        <button type="button" class="chip">Найди задачу про отчёт</button>
+        <button type="button" class="chip">Перенеси её на послезавтра</button>
+      </div>
+
+      <form id="composer" class="composer" autocomplete="off">
+        <button id="mic" class="mic" type="button" aria-label="Говорить" title="Нажмите и говорите">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg>
+        </button>
+        <input id="input" type="text" maxlength="500" placeholder="Скажите или напишите, например: «Что у меня завтра?»" aria-label="Запрос" />
+        <button id="send" class="send" type="submit" aria-label="Отправить">➤</button>
+      </form>
+      <p id="voice-status" class="voice-status" role="status"></p>
+    </section>
+
+    <aside class="agenda" aria-label="Мои записи">
+      <div class="agenda-head">
+        <h2>Мои записи</h2>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" data-view="upcoming" class="tab active">Ближайшее</button>
+          <button type="button" role="tab" data-view="today" class="tab">Сегодня</button>
+          <button type="button" role="tab" data-view="week" class="tab">Неделя</button>
+          <button type="button" role="tab" data-view="all" class="tab">Все</button>
+        </div>
+      </div>
+      <div id="agenda-list" class="agenda-list"></div>
+    </aside>
+  </main>
+
+  <div id="toasts" class="toasts" aria-live="assertive"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
